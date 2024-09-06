@@ -12,6 +12,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -45,6 +46,10 @@ func loadConfig() {
 	viper.SetConfigName("config")
 	viper.AddConfigPath(configPath)
 
+	viper.AutomaticEnv()
+	viper.SetEnvPrefix("weather_exporter")
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+
 	viper.SetDefault("webserverPort", 8080)
 	viper.SetDefault("loglevel", "info")
 	viper.SetDefault("jsonExporter", map[string]interface{}{"enabled": true})
@@ -52,7 +57,7 @@ func loadConfig() {
 	viper.SetDefault("influxDbExporter", map[string]interface{}{"enabled": false})
 
 	if err := viper.ReadInConfig(); err != nil {
-		log.Warnf("Error reading config file, using default values. %s", err)
+		log.Infof("Unable to read config file, using default values or environment. %s", err)
 	}
 	err := viper.Unmarshal(&config)
 	if err != nil {
