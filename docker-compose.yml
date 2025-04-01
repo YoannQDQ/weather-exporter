@@ -4,17 +4,17 @@ services:
   weather-exporter:
     build: .
     environment:
-      - WEATHER_EXPORTER_WEBSERVERPORT=8082
+      - WEATHER_EXPORTER_WEBSERVERPORT=8080
       - WEATHER_EXPORTER_LOGLEVEL=info
       - WEATHER_EXPORTER_JSONEXPORTER_ENABLED=true
       - WEATHER_EXPORTER_PROMETHEUSEXPORTER_ENABLED=true
-      - WEATHER_EXPORTER_INFLUXDBEXPORTER_ENABLED=false
-      - WEATHER_EXPORTER_INFLUXDBEXPORTER_SERVER=1.2.3.4
+      - WEATHER_EXPORTER_INFLUXDBEXPORTER_ENABLED=true
+      - WEATHER_EXPORTER_INFLUXDBEXPORTER_SERVER=influx-db
       - WEATHER_EXPORTER_INFLUXDBEXPORTER_PORT=8086
-      - WEATHER_EXPORTER_INFLUXDBEXPORTER_ORG=<org>
+      - WEATHER_EXPORTER_INFLUXDBEXPORTER_ORG=org
       - WEATHER_EXPORTER_INFLUXDBEXPORTER_TOKEN=<token> # or <username>:<password>
-      - WEATHER_EXPORTER_INFLUXDBEXPORTER_DATABASE=<database(bucket)>
-      - WEATHER_EXPORTER_INFLUXDBEXPORTER_MEASUREMENT=<measurement>
+      - WEATHER_EXPORTER_INFLUXDBEXPORTER_DATABASE=weather
+      - WEATHER_EXPORTER_INFLUXDBEXPORTER_MEASUREMENT=weather
       - WEATHER_EXPORTER_MQTT_ENABLED=false
       - WEATHER_EXPORTER_MQTT_BROKERADDRESS=1.2.3.4
       - WEATHER_EXPORTER_MQTT_BROKERPORT=1883
@@ -23,4 +23,31 @@ services:
       - WEATHER_EXPORTER_MQTT_CLIENTID=weather-exporter
       - WEATHER_EXPORTER_MQTT_TOPICPREFIX=weather
     ports:
-      - "8080:8080"
+      - "8083:8080"
+
+  influx-db:
+    container_name: influx-db
+    image: influxdb:2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=org
+      - DOCKER_INFLUXDB_INIT_BUCKET=weather
+    ports:
+      - 8086:8086
+    volumes:
+      - ./influxdb2/data:/var/lib/influxdb2
+      - ./influxdb2/config:/etc/influxdb2
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+volumes:
+  grafana-storage: {}
