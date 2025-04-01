@@ -26,3 +26,7 @@ go.work
 # Config file
 config.yaml
 /bresser-weather-exporter
+
+.venv
+influxdb2/config/*
+influxdb2/data/*
