@@ -54,7 +54,7 @@ func loadConfig() {
 	viper.SetDefault("loglevel", "info")
 	viper.SetDefault("jsonExporter", map[string]interface{}{"enabled": true})
 	viper.SetDefault("prometheusExporter", map[string]interface{}{"enabled": true})
-	viper.SetDefault("influxDbExporter", map[string]interface{}{"enabled": false})
+	viper.SetDefault("influxDbExporter", map[string]interface{}{"enabled": false, "server":"", "port":0, "token":"", "org":"", "database":"", "measurement":""})
 
 	if err := viper.ReadInConfig(); err != nil {
 		log.Infof("Unable to read config file, using default values or environment. %s", err)
