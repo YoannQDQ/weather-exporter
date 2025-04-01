@@ -70,6 +70,18 @@ func loadConfig() {
 	}
 
 	log.Info("Config loaded.")
+	log.Infof("Config Path: %s", configPath)
+	log.Infof("Webserver Port: %d", config.WebserverPort)
+	log.Infof("Log Level: %s", config.LogLevel)
+	log.Infof("InfluxDB Exporter: %t", config.InfluxDbExporter.Enabled)
+	log.Infof("InfluxDB Server: %s", config.InfluxDbExporter.Server)
+	log.Infof("InfluxDB Port: %d", config.InfluxDbExporter.Port)
+	log.Infof("InfluxDB Token: %s", config.InfluxDbExporter.Token)
+	log.Infof("InfluxDB Org: %s", config.InfluxDbExporter.Org)
+	log.Infof("InfluxDB Database: %s", config.InfluxDbExporter.Database)
+	log.Infof("InfluxDB Measurement: %s", config.InfluxDbExporter.Measurement)
+
+
 }
 
 func runWebserver() {
