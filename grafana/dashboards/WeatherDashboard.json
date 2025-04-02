@@ -22,10 +22,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cehlcrzl6anlsa"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -63,10 +60,7 @@
       "type": "operato-windrose-panel"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "fehlm00rhrrb4d"
-      },
+      "datasource": "InfluxDB_v2_InfluxQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -115,10 +109,7 @@
       "pluginVersion": "11.6.0",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "fehlm00rhrrb4d"
-          },
+          "datasource": "InfluxDB_v2_InfluxQL",
           "groupBy": [
             {
               "params": [
@@ -160,10 +151,7 @@
       "type": "gauge"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "fehlm00rhrrb4d"
-      },
+      "datasource": "InfluxDB_v2_InfluxQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -222,10 +210,7 @@
       "pluginVersion": "11.6.0",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "fehlm00rhrrb4d"
-          },
+          "datasource": "InfluxDB_v2_InfluxQL",
           "groupBy": [
             {
               "params": [
@@ -266,10 +251,7 @@
       "type": "gauge"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "fehlm00rhrrb4d"
-      },
+      "datasource": "InfluxDB_v2_InfluxQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -328,10 +310,7 @@
       "pluginVersion": "11.6.0",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "fehlm00rhrrb4d"
-          },
+          "datasource": "InfluxDB_v2_InfluxQL",
           "groupBy": [
             {
               "params": [
@@ -372,10 +351,7 @@
       "type": "gauge"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "fehlm00rhrrb4d"
-      },
+      "datasource": "InfluxDB_v2_InfluxQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -456,10 +432,7 @@
       "pluginVersion": "11.6.0",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "fehlm00rhrrb4d"
-          },
+          "datasource": "InfluxDB_v2_InfluxQL",
           "groupBy": [
             {
               "params": [

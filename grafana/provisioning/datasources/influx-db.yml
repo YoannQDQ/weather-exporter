@@ -1,0 +1,26 @@
+apiVersion: 1
+
+prune: true
+
+datasources:
+  - name: InfluxDB_v2_Flux
+    type: influxdb
+    access: proxy
+    url: http://influx-db:8086
+    jsonData:
+      version: Flux
+      organization: org
+      defaultBucket: weather
+      tlsSkipVerify: true
+    secureJsonData:
+      token: $INFLUX_DB_API_TOKEN
+    
+  - name: InfluxDB_v2_InfluxQL
+    type: influxdb
+    access: proxy
+    url: http://influx-db:8086
+    jsonData:
+      dbName: weather
+      httpHeaderName1: 'Authorization'
+    secureJsonData:
+      httpHeaderValue1: 'Token $INFLUX_DB_API_TOKEN'
