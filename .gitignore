@@ -30,3 +30,4 @@ config.yaml
 .venv
 influxdb2/config/*
 influxdb2/data/*
+.env
