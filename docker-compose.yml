@@ -11,12 +11,11 @@ services:
       - WEATHER_EXPORTER_INFLUXDBEXPORTER_SERVER=influx-db
       - WEATHER_EXPORTER_INFLUXDBEXPORTER_PORT=8086
       - WEATHER_EXPORTER_INFLUXDBEXPORTER_ORG=org
-      - WEATHER_EXPORTER_INFLUXDBEXPORTER_TOKEN=$INFLUX_DB_API_TOKEN
-      - WEATHER_EXPORTER_INFLUXDBEXPORTER_DATABASE=weather
-      - WEATHER_EXPORTER_INFLUXDBEXPORTER_MEASUREMENT=weather
+      - WEATHER_EXPORTER_INFLUXDBEXPORTER_TOKEN=$INFLUX_DB_TOKEN
+      - WEATHER_EXPORTER_INFLUXDBEXPORTER_DATABASE=$INFLUX_DB_BUCKET
+      - WEATHER_EXPORTER_INFLUXDBEXPORTER_MEASUREMENT=$INFLUX_DB_MEASUREMENT
     ports:
       - "8083:8080"
-
   influx-db:
     container_name: influx-db
     image: influxdb:2
@@ -25,13 +24,12 @@ services:
       - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUX_DB_USER:?Set it to the influx db username}
       - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUX_DB_PASSWORD:?Set it to the influx db password}
       - DOCKER_INFLUXDB_INIT_ORG=org
-      - DOCKER_INFLUXDB_INIT_BUCKET=weather
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUX_DB_BUCKET:?Set it to the influx db database}
     ports:
       - 8086:8086
     volumes:
-      - ./influxdb2/data:/var/lib/influxdb2
-      - ./influxdb2/config:/etc/influxdb2
-
+      - influxdb-storage-data:/var/lib/influxdb2
+      - influxdb-storage-config:/etc/influxdb2
   grafana:
     image: grafana/grafana-oss
     container_name: grafana
@@ -43,9 +41,13 @@ services:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/var/lib/grafana/dashboards
     environment:
-      - INFLUX_DB_API_TOKEN=$INFLUX_DB_API_TOKEN
+      - INFLUX_DB_TOKEN=$INFLUX_DB_TOKEN
+      - INFLUX_DB_BUCKET=$INFLUX_DB_BUCKET
+      - INFLUX_DB_MEASUREMENT=$INFLUX_DB_MEASUREMENT
       - GF_INSTALL_PLUGINS=operato-windrose-panel
       - GF_AUTH_ANONYMOUS_ENABLED=true
 
 volumes:
-  grafana-storage: {}
+  grafana-storage:
+  influxdb-storage-data:
+  influxdb-storage-config:

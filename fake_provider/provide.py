@@ -37,14 +37,24 @@ def build_url(params):
     return BASE_URL + "&".join(f"{key}={value}" for key, value in params.items())
 
 
+def cycle(time_s, min_val, max_val, cycle=300, randomness=0.05):
+    t = time_s % cycle
+    theta = math.pi * 2 * (t / cycle)
+    return (
+        min_val + (max_val - min_val) * (math.sin(theta) + 1) / 2 + (random() - 0.5) * (max_val - min_val) * randomness
+    )
+
+
 if __name__ == "__main__":
     p = PARAMS.copy()
     i = 0
     while True:
-        p["tempf"] = math.sin(int(time.time()) / 10) * 30 + 30
+        t = time.time()
+        p["tempf"] = cycle(t, 30, 70)
+        p["indoortempf"] = cycle(t, 60, 65, randomness=0)
+        p["humidity"] = cycle(t, 30, 70, randomness=0.2)
         p["winddir"] = p["winddir"] + randint(-1, 1)
         p["windspeedmph"] = randint(0, 10)
         url = build_url(p)
         print(requests.get(url))
-        time.sleep(0.1)
-        time.sleep(0.1)
+        time.sleep(1)

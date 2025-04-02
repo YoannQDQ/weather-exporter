@@ -10,17 +10,17 @@ datasources:
     jsonData:
       version: Flux
       organization: org
-      defaultBucket: weather
+      defaultBucket: $INFLUX_DB_BUCKET
       tlsSkipVerify: true
     secureJsonData:
-      token: $INFLUX_DB_API_TOKEN
+      token: $INFLUX_DB_TOKEN
     
   - name: InfluxDB_v2_InfluxQL
     type: influxdb
     access: proxy
     url: http://influx-db:8086
     jsonData:
-      dbName: weather
+      dbName: $INFLUX_DB_BUCKET
       httpHeaderName1: 'Authorization'
     secureJsonData:
-      httpHeaderValue1: 'Token $INFLUX_DB_API_TOKEN'
+      httpHeaderValue1: 'Token $INFLUX_DB_TOKEN'
